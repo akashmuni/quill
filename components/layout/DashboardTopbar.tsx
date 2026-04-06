@@ -23,7 +23,7 @@ export function DashboardTopbar({ userEmail }: { userEmail: string | null }) {
       )}
     >
       <span className="text-sm font-semibold tracking-[-0.2px] text-(--text-primary)">
-        Content Generator
+        Smart Content Assistant
       </span>
       <div className="flex items-center gap-1.5">
         <AccountMenu userEmail={userEmail} />
