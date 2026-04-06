@@ -1,130 +1,513 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
-}
-
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --font-jakarta: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-instrument: "Instrument Serif", ui-serif, serif;
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --surface: #f1f5f9;
+  --border: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-lt: #3b82f6;
+  --accent-foreground: #ffffff;
+  --accent-ring: rgba(37, 99, 235, 0.15);
+  --destructive: #ef4444;
+  --success: #22c55e;
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 56px;
+  --radius: 8px;
+  --bg: var(--background);
+  --bg-secondary: #f8fafc;
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+  --shadow-accent-sm: 0 2px 8px color-mix(in srgb, var(--accent) 35%, transparent);
+  --shadow-accent-md: 0 4px 14px color-mix(in srgb, var(--accent) 40%, transparent);
+  --shadow-brand-mark: 0 2px 8px color-mix(in srgb, var(--accent) 35%, transparent);
+  --shadow-welcome-orb: 0 6px 24px color-mix(in srgb, var(--accent) 30%, transparent);
+  --welcome-gradient: linear-gradient(135deg, var(--accent-lt) 0%, var(--accent) 100%);
+  --type-sum-bg: rgba(37, 99, 235, 0.1);
+  --type-sum-text: var(--accent);
+  --type-pro-bg: rgba(14, 165, 233, 0.1);
+  --type-pro-text: rgba(14, 165, 233, 1);
+  --type-cas-bg: rgba(34, 197, 94, 0.1);
+  --type-cas-text: rgba(34, 197, 94, 1);
+  --type-bul-bg: rgba(168, 85, 247, 0.1);
+  --type-bul-text: rgba(168, 85, 247, 1);
+  /* Floating tooltips (shadcn / Base UI popup) */
+  --tooltip-bg: #ffffff;
+  --tooltip-fg: #334155;
+  --tooltip-border: #e2e8f0;
+  --tooltip-shadow: 0 4px 20px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(15, 23, 42, 0.06);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: #09090b;
+  --foreground: #fafafa;
+  --surface: #18181b;
+  --border: #27272a;
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-muted: #52525b;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-lt: #60a5fa;
+  --accent-foreground: #ffffff;
+  --accent-ring: rgba(59, 130, 246, 0.2);
+  --destructive: #f87171;
+  --success: #4ade80;
+  --bg-secondary: #0f0f12;
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.4);
+  --type-sum-bg: rgba(59, 130, 246, 0.14);
+  --type-sum-text: var(--accent);
+  --type-pro-bg: rgba(14, 165, 233, 0.14);
+  --type-pro-text: rgba(56, 189, 248, 1);
+  --type-cas-bg: rgba(34, 197, 94, 0.14);
+  --type-cas-text: rgba(74, 222, 128, 1);
+  --type-bul-bg: rgba(168, 85, 247, 0.14);
+  --type-bul-text: rgba(192, 132, 252, 1);
+  --tooltip-bg: #27272a;
+  --tooltip-fg: #f4f4f5;
+  --tooltip-border: #3f3f46;
+  --tooltip-shadow: 0 8px 28px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
+/* Portaled UI (tooltips, etc.) inherits from html — be explicit so dark tokens beat :root. */
+html.dark {
+  --tooltip-bg: #27272a;
+  --tooltip-fg: #f4f4f5;
+  --tooltip-border: #3f3f46;
+  --tooltip-shadow: 0 8px 28px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/*
+ * Auth split: tokens switch with `html.dark` (next-themes).
+ * Default = light auth chrome; html.dark = cinematic dark (previous single palette).
+ */
+.auth-split {
+  --auth-radius-panel: 12px;
+  --auth-radius-input: 8px;
+  --auth-marketing-text: #0f172a;
+  --auth-marketing-text-secondary: #64748b;
+  --auth-marketing-text-muted: #94a3b8;
+  --auth-electric-glow: #2563eb;
+  --auth-electric-bright: #1d4ed8;
+  --auth-electric-border: rgba(37, 99, 235, 0.22);
+  --auth-glass: rgba(255, 255, 255, 0.72);
+  --auth-glass-border: rgba(15, 23, 42, 0.08);
+  --auth-gradient-base: linear-gradient(145deg, #e8f0fe 0%, #f1f5f9 42%, #eef2ff 100%);
+  --auth-dot-grid: radial-gradient(
+    circle,
+    rgba(37, 99, 235, 0.14) 1px,
+    transparent 1px
+  );
+  --auth-scanline: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(15, 23, 42, 0.02) 2px,
+    rgba(15, 23, 42, 0.02) 4px
+  );
+  --auth-edge-glow: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(37, 99, 235, 0.14) 50%,
+    transparent 100%
+  );
+  --auth-orb-1: radial-gradient(circle, rgba(37, 99, 235, 0.22) 0%, transparent 70%);
+  --auth-orb-2: radial-gradient(circle, rgba(59, 130, 246, 0.16) 0%, transparent 70%);
+  --auth-orb-3: radial-gradient(circle, rgba(29, 78, 216, 0.18) 0%, transparent 70%);
+  --auth-badge-bg: rgba(37, 99, 235, 0.08);
+  --auth-badge-border: rgba(37, 99, 235, 0.22);
+  --auth-feature-hover-bg: rgba(37, 99, 235, 0.07);
+  --auth-feat-icon-bg: rgba(37, 99, 235, 0.1);
+  --auth-feat-icon-border: rgba(37, 99, 235, 0.16);
+  --auth-form-panel-bg: #ffffff;
+  --auth-form-radial: radial-gradient(
+    ellipse 70% 35% at 50% 0%,
+    rgba(37, 99, 235, 0.06) 0%,
+    transparent 100%
+  );
+  --auth-tabs-track: rgba(15, 23, 42, 0.06);
+  --auth-tab-active-shadow: 0 2px 12px rgba(37, 99, 235, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  --auth-input-bg: #f8fafc;
+  --auth-input-border: rgba(15, 23, 42, 0.12);
+  --auth-input-focus-border: rgba(37, 99, 235, 0.55);
+  --auth-input-focus-bg: #ffffff;
+  --auth-input-focus-ring: rgba(37, 99, 235, 0.12);
+  --auth-google-bg: #ffffff;
+  --auth-google-border: rgba(15, 23, 42, 0.12);
+  --auth-google-hover-bg: #f8fafc;
+  --auth-google-hover-border: rgba(15, 23, 42, 0.18);
+  --auth-google-hover-shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
+  --auth-or-line: linear-gradient(
+    to right,
+    transparent,
+    rgba(15, 23, 42, 0.1),
+    transparent
+  );
+  --auth-submit-shadow: 0 4px 16px rgba(37, 99, 235, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  --auth-submit-hover-shadow: 0 6px 22px rgba(37, 99, 235, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  --auth-logo-icon-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  --auth-logo-icon-shadow: 0 4px 14px rgba(37, 99, 235, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  --auth-hero-em-gradient: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%);
+}
+
+html.dark .auth-split {
+  --auth-marketing-text: #eef2ff;
+  --auth-marketing-text-secondary: #94a3b8;
+  --auth-marketing-text-muted: #3d4f6b;
+  --auth-electric-glow: #60a5fa;
+  --auth-electric-bright: #3b82f6;
+  --auth-electric-border: rgba(59, 130, 246, 0.2);
+  --auth-glass: rgba(255, 255, 255, 0.03);
+  --auth-glass-border: rgba(255, 255, 255, 0.07);
+  --auth-gradient-base: linear-gradient(145deg, #060f2e 0%, #030818 45%, #050d22 100%);
+  --auth-dot-grid: radial-gradient(
+    circle,
+    rgba(96, 165, 250, 0.18) 1px,
+    transparent 1px
+  );
+  --auth-scanline: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  --auth-edge-glow: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(59, 130, 246, 0.15) 20%,
+    rgba(59, 130, 246, 0.3) 50%,
+    rgba(59, 130, 246, 0.15) 80%,
+    transparent 100%
+  );
+  --auth-orb-1: radial-gradient(circle, rgba(37, 99, 235, 0.45) 0%, transparent 70%);
+  --auth-orb-2: radial-gradient(circle, rgba(96, 165, 250, 0.22) 0%, transparent 70%);
+  --auth-orb-3: radial-gradient(circle, rgba(29, 78, 216, 0.35) 0%, transparent 70%);
+  --auth-badge-bg: rgba(37, 99, 235, 0.1);
+  --auth-badge-border: rgba(59, 130, 246, 0.25);
+  --auth-feature-hover-bg: rgba(37, 99, 235, 0.06);
+  --auth-feat-icon-bg: rgba(37, 99, 235, 0.12);
+  --auth-feat-icon-border: rgba(59, 130, 246, 0.18);
+  --auth-form-panel-bg: rgba(4, 9, 24, 0.97);
+  --auth-form-radial: radial-gradient(
+    ellipse 70% 35% at 50% 0%,
+    rgba(37, 99, 235, 0.07) 0%,
+    transparent 100%
+  );
+  --auth-tabs-track: rgba(255, 255, 255, 0.04);
+  --auth-tab-active-shadow: 0 2px 14px rgba(37, 99, 235, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --auth-input-bg: rgba(255, 255, 255, 0.035);
+  --auth-input-border: rgba(255, 255, 255, 0.09);
+  --auth-input-focus-border: rgba(59, 130, 246, 0.6);
+  --auth-input-focus-bg: rgba(37, 99, 235, 0.06);
+  --auth-input-focus-ring: rgba(37, 99, 235, 0.1);
+  --auth-google-bg: rgba(255, 255, 255, 0.04);
+  --auth-google-border: rgba(255, 255, 255, 0.1);
+  --auth-google-hover-bg: rgba(255, 255, 255, 0.07);
+  --auth-google-hover-border: rgba(255, 255, 255, 0.18);
+  --auth-google-hover-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  --auth-or-line: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.07),
+    transparent
+  );
+  --auth-submit-shadow: 0 4px 20px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  --auth-submit-hover-shadow: 0 8px 30px rgba(37, 99, 235, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  --auth-logo-icon-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  --auth-logo-icon-shadow: 0 0 24px rgba(59, 130, 246, 0.5), 0 0 8px rgba(59, 130, 246, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  --auth-hero-em-gradient: linear-gradient(135deg, #93c5fd 0%, #60a5fa 50%, #3b82f6 100%);
+}
+
+@keyframes auth-drift-1 {
+  from {
+    transform: translate(0, 0) scale(1);
   }
-  body {
-    @apply bg-background text-foreground;
+  to {
+    transform: translate(30px, 25px) scale(1.08);
   }
-  html {
-    @apply font-sans;
+}
+
+@keyframes auth-drift-2 {
+  from {
+    transform: translate(0, 0) scale(1);
   }
+  to {
+    transform: translate(-20px, -30px) scale(1.05);
+  }
+}
+
+@keyframes auth-drift-3 {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(15px, -20px);
+  }
+}
+
+@keyframes auth-pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 8px var(--auth-electric-glow);
+  }
+  50% {
+    opacity: 0.4;
+    box-shadow: 0 0 3px var(--auth-electric-glow);
+  }
+}
+
+@keyframes auth-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes auth-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dashboard-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dashboard-orb-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@layer components {
+  .dashboard-welcome-animate {
+    animation: dashboard-fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .dashboard-input-card-animate {
+    animation: dashboard-fade-up 0.45s 0.08s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .dashboard-orb-bob {
+    animation: dashboard-orb-bob 5s ease-in-out infinite;
+  }
+
+  .dashboard-output-animate {
+    animation: dashboard-fade-up 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .dashboard-welcome-orb-bg {
+    background: var(--welcome-gradient);
+  }
+  .auth-marketing-base {
+    position: absolute;
+    inset: 0;
+    background: var(--auth-gradient-base);
+  }
+
+  .auth-dot-grid-layer {
+    position: absolute;
+    inset: 0;
+    background-image: var(--auth-dot-grid);
+    background-size: 36px 36px;
+    mask-image: radial-gradient(ellipse 85% 75% at 40% 50%, black 20%, transparent 100%);
+  }
+
+  .auth-scanline-layer {
+    position: absolute;
+    inset: 0;
+    background: var(--auth-scanline);
+    pointer-events: none;
+  }
+
+  .auth-marketing-edge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--auth-edge-glow);
+  }
+
+  .auth-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(72px);
+    pointer-events: none;
+  }
+
+  .auth-orb-1 {
+    width: 500px;
+    height: 500px;
+    background: var(--auth-orb-1);
+    top: -120px;
+    left: -100px;
+    animation: auth-drift-1 12s ease-in-out infinite alternate;
+  }
+
+  .auth-orb-2 {
+    width: 380px;
+    height: 380px;
+    background: var(--auth-orb-2);
+    bottom: 60px;
+    right: 40px;
+    animation: auth-drift-2 10s ease-in-out infinite alternate;
+  }
+
+  .auth-orb-3 {
+    width: 280px;
+    height: 280px;
+    background: var(--auth-orb-3);
+    top: 45%;
+    left: 35%;
+    animation: auth-drift-3 14s ease-in-out infinite alternate;
+  }
+
+  .auth-hero-em {
+    font-style: italic;
+    background: var(--auth-hero-em-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .auth-feature-card {
+    animation: auth-slide-in 0.5s ease both;
+  }
+
+  .auth-feature-card:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+
+  .auth-feature-card:nth-child(2) {
+    animation-delay: 0.12s;
+  }
+
+  .auth-feature-card:nth-child(3) {
+    animation-delay: 0.19s;
+  }
+
+  .auth-form-ambient {
+    position: absolute;
+    inset: 0;
+    background: var(--auth-form-radial);
+    pointer-events: none;
+  }
+
+  .auth-submit-primary {
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: var(--auth-radius-panel);
+    background: var(--accent);
+    padding: 12px 22px;
+    font-size: 14.5px;
+    font-weight: 600;
+    letter-spacing: -0.1px;
+    color: var(--accent-foreground);
+    cursor: pointer;
+    box-shadow: var(--auth-submit-shadow);
+    transition:
+      transform 0.25s ease,
+      background-color 0.25s ease,
+      box-shadow 0.25s ease,
+      opacity 0.25s ease;
+  }
+
+  .auth-submit-primary:hover:not(:disabled) {
+    transform: translateY(-1px);
+    background: var(--accent-hover);
+    box-shadow: var(--auth-submit-hover-shadow);
+  }
+
+  .auth-submit-primary:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  .auth-submit-primary:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+    transform: none;
+  }
+
+  .auth-google-btn {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 11px 18px;
+    margin-bottom: 20px;
+    border-radius: var(--auth-radius-panel);
+    border: 1px solid var(--auth-google-border);
+    background: var(--auth-google-bg);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--auth-marketing-text);
+    cursor: pointer;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .auth-google-btn:hover {
+    transform: translateY(-1px);
+    border-color: var(--auth-google-hover-border);
+    background: var(--auth-google-hover-bg);
+    box-shadow: var(--auth-google-hover-shadow);
+  }
+
+  .auth-google-btn:active {
+    transform: translateY(0);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  border-color: var(--border);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-jakarta);
+  -webkit-font-smoothing: antialiased;
 }
