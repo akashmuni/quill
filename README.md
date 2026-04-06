@@ -4,7 +4,7 @@
 
 ## Live Demo
 
-[Link placeholder - will be added after deployment]
+https://quill.akashmuni.com
 
 ## Tech Stack
 
