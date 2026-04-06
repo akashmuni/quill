@@ -16,6 +16,13 @@ import { useDashboard } from '@/lib/dashboard-context'
 import { OutputCard } from '@/components/generator/OutputCard'
 import { ShareDialog } from '@/components/share/ShareDialog'
 import { QuillPenIcon } from '@/components/icons/QuillPenIcon'
+import { useIsLg } from '@/hooks/use-is-lg'
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import type { Generation, GenerationType } from '@/types'
 import { pathWithGenerationQuery } from '@/lib/dashboard-url'
@@ -157,12 +164,22 @@ function DashboardPageInner() {
   }
 
   const showWelcomeBlock = !displayedOutput
+  const isLg = useIsLg()
 
   const typeBtnBase =
     'flex items-center gap-1.5 rounded-full border border-(--border) bg-(--bg) px-3.5 py-1.5 text-[12.5px] font-medium text-(--text-secondary) transition-all duration-200 ease-in-out hover:border-(--accent) hover:bg-[color-mix(in_srgb,var(--accent)_7%,transparent)] hover:text-(--accent) disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-(--border) disabled:hover:bg-(--bg) disabled:hover:text-(--text-secondary)'
 
   const typeBtnSelected =
     'border-(--accent) bg-[color-mix(in_srgb,var(--accent)_7%,transparent)] font-semibold text-(--accent)'
+
+  const typeChipMobileShell =
+    'inline-flex max-w-full items-stretch overflow-hidden rounded-full border border-(--border) bg-(--bg) text-[12.5px] font-medium text-(--text-secondary) transition-all duration-200 ease-in-out hover:border-(--accent) hover:bg-[color-mix(in_srgb,var(--accent)_7%,transparent)] hover:text-(--accent) has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:disabled]:hover:border-(--border) has-[:disabled]:hover:bg-(--bg) has-[:disabled]:hover:text-(--text-secondary)'
+
+  const typeChipMainBtn =
+    'flex min-w-0 flex-1 items-center gap-1.5 border-none bg-transparent py-1.5 pl-3.5 pr-1 text-left text-inherit outline-none'
+
+  const typeChipInfoBtn =
+    'flex shrink-0 items-center justify-center border-none bg-transparent px-2 py-1.5 text-inherit outline-none'
 
   return (
     <div className="flex min-h-0 flex-1 flex-col items-center overflow-y-auto overflow-x-hidden pt-6 pb-12 [scrollbar-width:thin] [scrollbar-color:var(--border)_transparent] sm:pt-10 sm:pb-16 lg:pt-12 lg:pb-20">
@@ -196,11 +213,53 @@ function DashboardPageInner() {
               <div className="flex flex-wrap gap-2 px-0 pb-0 pt-1">
                 {TYPE_OPTIONS.map(({ type, label, tooltip, Icon }) => {
                   const selected = selectedType === type
+                  if (!isLg) {
+                    return (
+                      <div
+                        key={type}
+                        className={cn(typeChipMobileShell, selected && typeBtnSelected)}
+                      >
+                        <button
+                          type="button"
+                          disabled={isLoading}
+                          onClick={() => setSelectedType(type)}
+                          className={typeChipMainBtn}
+                        >
+                          <Icon size={13} strokeWidth={1.8} className="shrink-0" />
+                          <span className="truncate">{label}</span>
+                        </button>
+                        <Popover>
+                          <PopoverTrigger
+                            type="button"
+                            disabled={isLoading}
+                            className={typeChipInfoBtn}
+                            aria-label={`${label}: what this does`}
+                          >
+                            <Info
+                              size={12}
+                              strokeWidth={2}
+                              className="shrink-0 text-[var(--text-muted)] opacity-60"
+                              aria-hidden
+                            />
+                          </PopoverTrigger>
+                          <PopoverContent
+                            side="top"
+                            sideOffset={6}
+                            align="end"
+                            className="w-max max-w-[min(18rem,calc(100vw-1.5rem))] gap-0 border-[var(--tooltip-border)] bg-[var(--tooltip-bg)] p-3.5 text-[13px] font-medium leading-snug tracking-[-0.01em] text-[var(--tooltip-fg)] shadow-[var(--tooltip-shadow)] dark:border-(--border) dark:bg-(--surface) dark:text-(--text-primary) dark:shadow-[var(--shadow-md)]"
+                          >
+                            <PopoverDescription>{tooltip}</PopoverDescription>
+                          </PopoverContent>
+                        </Popover>
+                      </div>
+                    )
+                  }
                   return (
                     <Tooltip key={type}>
                       <TooltipTrigger
                         type="button"
                         disabled={isLoading}
+                        closeOnClick={false}
                         onClick={() => setSelectedType(type)}
                         className={cn(typeBtnBase, selected && typeBtnSelected)}
                       >
