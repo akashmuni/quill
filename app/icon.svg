@@ -1,11 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="8" fill="url(#quill-icon-grad)"/>
-  <defs>
-    <linearGradient id="quill-icon-grad" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#3B82F6"/>
-      <stop offset="1" stop-color="#1D4ED8"/>
-    </linearGradient>
-  </defs>
+  <rect width="32" height="32" rx="8" fill="#2563eb"/>
   <path
     fill="#fff"
     d="M20.2 7.3a1.2 1.2 0 0 1 1.7 0l2.8 2.8a1.2 1.2 0 0 1 0 1.7L14.4 22.1l-4.1.9.9-4.1L20.2 7.3Zm-7.4 12.4-1.6 3.6 3.6-1.6-2-2Z"
