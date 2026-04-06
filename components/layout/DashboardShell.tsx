@@ -1,9 +1,11 @@
 'use client'
 
-import { Suspense, useCallback, useEffect, useRef } from 'react'
+import { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { DashboardProvider, useDashboard } from '@/lib/dashboard-context'
 import { pathWithGenerationQuery } from '@/lib/dashboard-url'
+import { useIsLg } from '@/hooks/use-is-lg'
+import { cn } from '@/lib/utils'
 import { Sidebar } from './Sidebar'
 import { DashboardTopbar } from './DashboardTopbar'
 import type { Generation } from '@/types'
@@ -23,6 +25,31 @@ function ShellInner({
   searchParamsRef.current = searchParams
   const viewingIdRef = useRef<string | null>(null)
   const newSessionFiredRef = useRef(false)
+
+  const isLg = useIsLg()
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
+
+  useLayoutEffect(() => {
+    if (isLg) setMobileNavOpen(false)
+  }, [isLg])
+
+  useEffect(() => {
+    if (!mobileNavOpen || isLg) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileNavOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [mobileNavOpen, isLg])
+
+  useEffect(() => {
+    if (!mobileNavOpen || isLg) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [mobileNavOpen, isLg])
 
   const {
     items,
@@ -52,6 +79,7 @@ function ShellInner({
     (gen: Generation) => {
       setViewingGeneration(gen)
       replaceGenerationInUrl(gen.id)
+      setMobileNavOpen(false)
     },
     [setViewingGeneration, replaceGenerationInUrl],
   )
@@ -60,6 +88,7 @@ function ShellInner({
     newSessionFiredRef.current = true
     startNewSession()
     replaceGenerationInUrl(null)
+    setMobileNavOpen(false)
   }, [startNewSession, replaceGenerationInUrl])
 
   useEffect(() => {
@@ -136,17 +165,34 @@ function ShellInner({
   )
 
   return (
-    <div className="flex h-screen overflow-hidden bg-(--bg-secondary)">
+    <div className="relative flex h-dvh min-h-0 overflow-hidden bg-(--bg-secondary) lg:h-screen">
+      <button
+        type="button"
+        aria-label="Close navigation menu"
+        className={cn(
+          'fixed inset-0 z-40 bg-black/45 backdrop-blur-[2px] transition-opacity duration-200 lg:hidden',
+          mobileNavOpen ? 'opacity-100' : 'pointer-events-none opacity-0',
+        )}
+        onClick={() => setMobileNavOpen(false)}
+      />
+
       <Sidebar
         items={items}
         isLoading={isLoading}
+        isLg={isLg}
+        mobileNavOpen={mobileNavOpen}
+        onMobileNavClose={() => setMobileNavOpen(false)}
         onSelect={selectGeneration}
         onDelete={handleDelete}
         onNew={startNewSessionWithUrl}
         selectedId={viewingGeneration?.id ?? latestGeneratedId}
       />
-      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <DashboardTopbar userEmail={userEmail} />
+      <div className="flex min-w-0 min-h-0 flex-1 flex-col overflow-hidden">
+        <DashboardTopbar
+          userEmail={userEmail}
+          mobileNavOpen={mobileNavOpen}
+          onToggleMobileNav={() => setMobileNavOpen(o => !o)}
+        />
         <main className="min-h-0 flex-1 overflow-hidden">{children}</main>
       </div>
     </div>

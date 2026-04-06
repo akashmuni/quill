@@ -165,8 +165,8 @@ function DashboardPageInner() {
     'border-(--accent) bg-[color-mix(in_srgb,var(--accent)_7%,transparent)] font-semibold text-(--accent)'
 
   return (
-    <div className="flex flex-1 flex-col items-center overflow-y-auto overflow-x-hidden pt-12 pb-20 [scrollbar-width:thin] [scrollbar-color:var(--border)_transparent]">
-      <div className="flex w-full max-w-[680px] flex-col gap-5 px-7">
+    <div className="flex flex-1 flex-col items-center overflow-y-auto overflow-x-hidden pt-6 pb-12 [scrollbar-width:thin] [scrollbar-color:var(--border)_transparent] sm:pt-10 sm:pb-16 lg:pt-12 lg:pb-20">
+      <div className="flex w-full max-w-[680px] flex-col gap-4 px-4 sm:gap-5 sm:px-6 lg:px-7">
         {showWelcomeBlock && (
           <div className="dashboard-welcome-animate px-1 pb-1 pt-3 text-center">
             <div className="dashboard-welcome-orb-bg dashboard-orb-bob mx-auto mb-[18px] flex size-[52px] items-center justify-center rounded-[15px] text-(--accent-foreground) shadow-[var(--shadow-welcome-orb)]">

@@ -49,6 +49,9 @@ function groupByDate(items: Generation[]) {
 export function Sidebar({
   items,
   isLoading,
+  isLg,
+  mobileNavOpen,
+  onMobileNavClose,
   onSelect,
   onDelete,
   onNew,
@@ -56,12 +59,16 @@ export function Sidebar({
 }: {
   items: Generation[]
   isLoading: boolean
+  isLg: boolean
+  mobileNavOpen: boolean
+  onMobileNavClose: () => void
   onSelect: (generation: Generation) => void
   onDelete: (id: string) => Promise<void>
   onNew: () => void
   selectedId: string | null
 }) {
   const [collapsed, setCollapsed] = useState(false)
+  const effectiveCollapsed = isLg && collapsed
   const [sheetOpen, setSheetOpen] = useState(false)
   const [pendingDelete, setPendingDelete] = useState<Generation | null>(null)
   const [deleteInProgress, setDeleteInProgress] = useState(false)
@@ -98,7 +105,7 @@ export function Sidebar({
         <div
           className={cn(
             'px-3.5 pb-1 pt-2.5 text-[9.5px] font-bold uppercase tracking-[1.6px] text-(--text-muted) transition-opacity duration-200 ease-in-out',
-            collapsed ? 'pointer-events-none opacity-0' : '',
+            effectiveCollapsed ? 'pointer-events-none opacity-0' : '',
           )}
         >
           {label}
@@ -112,10 +119,10 @@ export function Sidebar({
             <div
               key={item.id}
               onClick={() => onSelect(item)}
-              title={collapsed ? preview : undefined}
+              title={effectiveCollapsed ? preview : undefined}
               className={cn(
                 'group relative mx-1.5 my-px flex cursor-pointer items-center gap-2.5 rounded-(--radius) py-[7px] pl-2.5 pr-2.5 transition-colors duration-200 ease-in-out',
-                collapsed ? 'justify-center px-2' : '',
+                effectiveCollapsed ? 'justify-center px-2' : '',
                 isSelected
                   ? 'bg-[color-mix(in_srgb,var(--accent)_10%,transparent)]'
                   : 'bg-transparent hover:bg-(--surface)',
@@ -125,13 +132,13 @@ export function Sidebar({
                 className={cn(
                   'flex size-5 shrink-0 items-center justify-center rounded-[5px] font-mono text-[10px] font-bold uppercase tracking-[0.2px]',
                   TYPE_BADGE_CLASS[item.generation_type],
-                  collapsed ? 'mx-auto' : '',
+                  effectiveCollapsed ? 'mx-auto' : '',
                 )}
               >
                 {TYPE_BADGE_LABEL[item.generation_type]}
               </div>
 
-              {!collapsed && (
+              {!effectiveCollapsed && (
                 <>
                   <span
                     className={cn(
@@ -172,33 +179,36 @@ export function Sidebar({
 
   return (
     <aside
+      id="dashboard-sidebar"
       className={cn(
-        'relative z-20 flex h-screen shrink-0 flex-col overflow-hidden border-r border-(--border) bg-(--bg) transition-[width] duration-200 ease-in-out',
-        collapsed ? 'w-14' : 'w-[260px]',
+        'flex h-dvh shrink-0 flex-col overflow-hidden border-r border-(--border) bg-(--bg) transition-transform duration-200 ease-in-out lg:z-20 lg:h-screen lg:translate-x-0 lg:transition-[width]',
+        'fixed left-0 top-0 z-50 w-[min(288px,92vw)] max-w-[320px] -translate-x-full lg:static lg:max-w-none',
+        mobileNavOpen && 'translate-x-0',
+        effectiveCollapsed ? 'lg:w-14' : 'lg:w-[260px]',
       )}
     >
       <div
         className={cn(
           'flex shrink-0 border-b border-(--border)',
-          collapsed
-            ? 'flex-col items-center gap-2 py-2.5'
-            : 'h-14 flex-row items-center justify-between pl-3.5 pr-3',
+          effectiveCollapsed
+            ? 'flex-col items-center gap-2 py-2.5 lg:flex-col'
+            : 'h-14 flex-row items-center justify-between gap-2 pl-3.5 pr-2 sm:pr-3',
         )}
       >
         <div
           className={cn(
-            'flex min-w-0 items-center gap-2.5 overflow-hidden',
-            collapsed ? 'flex-col gap-2' : '',
+            'flex min-w-0 flex-1 items-center gap-2.5 overflow-hidden',
+            effectiveCollapsed ? 'flex-col gap-2' : '',
           )}
         >
           <div
             className={cn(
-              'flex size-[30px] shrink-0 items-center justify-center rounded-lg bg-(--accent) text-(--accent-foreground) shadow-[var(--shadow-brand-mark)]',
+              'flex size-[30px] shrink-0 items-center justify-center rounded-lg bg-(--accent) text-(--accent-foreground) shadow-(--shadow-brand-mark)',
             )}
           >
             <QuillPenIcon className="size-[15px]" />
           </div>
-          {!collapsed && (
+          {!effectiveCollapsed && (
             <span className="truncate text-[15px] font-bold tracking-[-0.4px] text-(--text-primary)">
               Quill
             </span>
@@ -209,41 +219,46 @@ export function Sidebar({
           onClick={() => setCollapsed(!collapsed)}
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           className={cn(
-            'flex size-[26px] shrink-0 cursor-pointer items-center justify-center rounded-(--radius) border-none bg-transparent text-(--text-muted) transition-all duration-200 ease-in-out hover:bg-(--surface) hover:text-(--text-secondary)',
-            collapsed ? 'mx-auto' : '',
+            'hidden size-[26px] shrink-0 cursor-pointer items-center justify-center rounded-(--radius) border-none bg-transparent text-(--text-muted) transition-all duration-200 ease-in-out hover:bg-(--surface) hover:text-(--text-secondary) lg:flex',
+            effectiveCollapsed ? 'mx-auto' : '',
           )}
         >
           {collapsed ? <PanelLeftOpen size={15} strokeWidth={2} /> : <PanelLeftClose size={15} strokeWidth={2} />}
         </button>
       </div>
 
-      <div className={cn('pt-2.5', collapsed ? 'px-0' : 'px-2.5')}>
+      <div className={cn('pt-2.5', effectiveCollapsed ? 'px-0' : 'px-2.5')}>
         <button
           type="button"
           onClick={onNew}
           aria-label="New generation"
           className={cn(
-            'flex cursor-pointer items-center gap-2 rounded-(--radius) border-none bg-(--accent) text-[13px] font-semibold text-(--accent-foreground) shadow-[var(--shadow-accent-sm)] transition-all duration-200 ease-in-out hover:bg-(--accent-hover) hover:shadow-[var(--shadow-accent-md)] enabled:hover:-translate-y-px enabled:active:translate-y-0',
-            collapsed ? 'mx-auto size-9 justify-center p-0' : 'w-full justify-start px-3.5 py-2',
+            'flex cursor-pointer items-center gap-2 rounded-(--radius) border-none bg-(--accent) text-[13px] font-semibold text-(--accent-foreground) shadow-(--shadow-accent-sm) transition-all duration-200 ease-in-out hover:bg-(--accent-hover) hover:shadow-(--shadow-accent-md) enabled:hover:-translate-y-px enabled:active:translate-y-0',
+            effectiveCollapsed ? 'mx-auto size-9 justify-center p-0' : 'w-full justify-start px-3.5 py-2',
           )}
         >
           <Plus size={15} strokeWidth={2.5} className="shrink-0" />
-          {!collapsed && <span className="truncate transition-opacity duration-200 ease-in-out">New generation</span>}
+          {!effectiveCollapsed && (
+            <span className="truncate transition-opacity duration-200 ease-in-out">New generation</span>
+          )}
         </button>
       </div>
 
-      <div className={cn(collapsed ? 'px-0' : 'px-2.5', 'pb-1')}>
+      <div className={cn(effectiveCollapsed ? 'px-0' : 'px-2.5', 'pb-1')}>
         <button
           type="button"
-          onClick={() => setSheetOpen(true)}
-          aria-label={collapsed ? 'Shared links' : undefined}
+          onClick={() => {
+            setSheetOpen(true)
+            onMobileNavClose()
+          }}
+          aria-label={effectiveCollapsed ? 'Shared links' : undefined}
           className={cn(
             'flex w-full cursor-pointer items-center gap-2 rounded-(--radius) border-none bg-transparent text-[13px] font-medium text-(--text-secondary) transition-all duration-200 ease-in-out hover:bg-(--surface)',
-            collapsed ? 'mx-auto size-9 justify-center p-0' : 'justify-start px-3 py-2',
+            effectiveCollapsed ? 'mx-auto size-9 justify-center p-0' : 'justify-start px-3 py-2',
           )}
         >
           <Link2 size={15} strokeWidth={2} className="shrink-0" aria-hidden />
-          {!collapsed && <span className="truncate transition-opacity duration-200 ease-in-out">Shared</span>}
+          {!effectiveCollapsed && <span className="truncate transition-opacity duration-200 ease-in-out">Shared</span>}
         </button>
       </div>
 
@@ -258,7 +273,7 @@ export function Sidebar({
             ))}
           </div>
         ) : items.length === 0 ? (
-          !collapsed && (
+          !effectiveCollapsed && (
             <div className="px-4 py-6 text-center text-xs text-(--text-secondary)">No generations yet</div>
           )
         ) : (
@@ -273,13 +288,13 @@ export function Sidebar({
       <div
         className={cn(
           'shrink-0 border-t border-(--border) transition-opacity duration-200 ease-in-out',
-          collapsed ? 'flex justify-center px-0 py-2.5' : 'flex flex-col items-center px-3.5 py-3',
+          effectiveCollapsed ? 'flex justify-center px-0 py-2.5' : 'flex flex-col items-center px-3.5 py-3',
         )}
       >
         <div
           className={cn(
             'hidden size-5 items-center justify-center rounded-[5px] bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] text-(--accent)',
-            collapsed ? 'flex' : '',
+            effectiveCollapsed ? 'flex' : '',
           )}
         >
           <QuillPenIcon className="size-2.5" />
@@ -287,7 +302,7 @@ export function Sidebar({
         <div
           className={cn(
             'text-center text-[11px] leading-normal text-(--text-muted) transition-opacity duration-200 ease-in-out',
-            collapsed ? 'hidden' : 'w-full',
+            effectiveCollapsed ? 'hidden' : 'w-full',
           )}
         >
           <span className="font-semibold text-(--text-secondary)">Quill</span>
