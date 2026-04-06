@@ -28,14 +28,14 @@ export function OutputCard({
   return (
     <div
       className={cn(
-        'dashboard-output-animate overflow-hidden rounded-3xl border border-(--border) bg-(--bg) shadow-[var(--shadow-md)]',
+        'dashboard-output-animate overflow-hidden rounded-3xl border border-(--border) bg-(--bg) shadow-(--shadow-md)',
         className,
       )}
     >
       <div className="flex items-center justify-between border-b border-(--border) bg-(--bg-secondary) px-[18px] py-[13px]">
         <div className="flex min-w-0 items-center gap-2.5">
-          <span className="inline-flex shrink-0 items-center rounded-full border border-[var(--accent-ring)] bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] px-3 py-0.5 text-[10.5px] font-bold uppercase tracking-wider text-(--accent)">
-            {getGenerationLabel(generation.generation_type)}
+          <span className="inline-flex shrink-0 items-center rounded-full border border-(--accent-ring) bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] px-3 py-0.5 text-[10.5px] font-bold uppercase tracking-wider text-(--accent)">
+           {getGenerationLabel(generation.generation_type)}
           </span>
           <span className="truncate text-xs text-(--text-muted)">{formatDate(generation.created_at)}</span>
         </div>

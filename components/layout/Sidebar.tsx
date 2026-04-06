@@ -21,10 +21,10 @@ const TYPE_BADGE_LABEL: Record<GenerationType, string> = {
 }
 
 const TYPE_BADGE_CLASS: Record<GenerationType, string> = {
-  summary: 'bg-[var(--type-sum-bg)] text-[var(--type-sum-text)]',
-  rewrite_professional: 'bg-[var(--type-pro-bg)] text-[var(--type-pro-text)]',
-  rewrite_casual: 'bg-[var(--type-cas-bg)] text-[var(--type-cas-text)]',
-  bullets: 'bg-[var(--type-bul-bg)] text-[var(--type-bul-text)]',
+  summary: 'bg-(--type-sum-bg) text-(--type-sum-text)',
+  rewrite_professional: 'bg-(--type-pro-bg) text-(--type-pro-text)',
+  rewrite_casual: 'bg-(--type-cas-bg) text-(--type-cas-text)',
+  bullets: 'bg-(--type-bul-bg) text-(--type-bul-text)',
 }
 
 function groupByDate(items: Generation[]) {
@@ -322,7 +322,7 @@ export function Sidebar({
       >
         <DialogContent
           showCloseButton={!deleteInProgress}
-          className="gap-0 overflow-hidden border border-(--border) bg-(--bg) p-0 text-(--text-primary) shadow-[var(--shadow-md)] sm:max-w-[420px]"
+          className="gap-0 overflow-hidden border border-(--border) bg-(--bg) p-0 text-(--text-primary) shadow-(--shadow-md) sm:max-w-[420px]"
         >
           <div className="px-5 pt-5 pb-4">
             <DialogTitle className="text-[17px] font-semibold leading-snug tracking-[-0.02em] text-(--text-primary)">

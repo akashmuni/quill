@@ -186,7 +186,7 @@ function DashboardPageInner() {
       <div className="flex w-full max-w-[680px] flex-col gap-4 px-4 sm:gap-5 sm:px-6 lg:px-7">
         {showWelcomeBlock && (
           <div className="dashboard-welcome-animate px-1 pb-1 pt-3 text-center">
-            <div className="dashboard-welcome-orb-bg dashboard-orb-bob mx-auto mb-[18px] flex size-[52px] items-center justify-center rounded-[15px] text-(--accent-foreground) shadow-[var(--shadow-welcome-orb)]">
+            <div className="dashboard-welcome-orb-bg dashboard-orb-bob mx-auto mb-[18px] flex size-[52px] items-center justify-center rounded-[15px] text-(--accent-foreground) shadow-(--shadow-welcome-orb)">
               <QuillPenIcon className="size-6" />
             </div>
             <h1 className="mb-2 text-2xl font-bold leading-[1.15] tracking-[-0.6px] text-(--text-primary)">
@@ -200,7 +200,7 @@ function DashboardPageInner() {
           </div>
         )}
 
-        <div className="dashboard-input-card-animate group overflow-hidden rounded-3xl border border-(--border) bg-(--bg) shadow-[var(--shadow-md)] transition-all duration-200 ease-in-out focus-within:border-[color-mix(in_srgb,var(--accent)_30%,transparent)] focus-within:shadow-[var(--shadow-md),0_0_0_3px_var(--accent-ring)]">
+        <div className="dashboard-input-card-animate group overflow-hidden rounded-3xl border border-(--border) bg-(--bg) shadow-(--shadow-md) transition-all duration-200 ease-in-out focus-within:border-[color-mix(in_srgb,var(--accent)_30%,transparent)] focus-within:shadow-[var(--shadow-md),0_0_0_3px_var(--accent-ring)]">
           <textarea
             value={inputText}
             onChange={e => setInputText(e.target.value)}
@@ -238,7 +238,7 @@ function DashboardPageInner() {
                             <Info
                               size={12}
                               strokeWidth={2}
-                              className="shrink-0 text-[var(--text-muted)] opacity-60"
+                              className="shrink-0 text-(--text-muted) opacity-60"
                               aria-hidden
                             />
                           </PopoverTrigger>
@@ -246,7 +246,7 @@ function DashboardPageInner() {
                             side="top"
                             sideOffset={6}
                             align="end"
-                            className="w-max max-w-[min(18rem,calc(100vw-1.5rem))] gap-0 border-[var(--tooltip-border)] bg-[var(--tooltip-bg)] p-3.5 text-[13px] font-medium leading-snug tracking-[-0.01em] text-[var(--tooltip-fg)] shadow-[var(--tooltip-shadow)] dark:border-(--border) dark:bg-(--surface) dark:text-(--text-primary) dark:shadow-[var(--shadow-md)]"
+                            className="w-max max-w-[min(18rem,calc(100vw-1.5rem))] gap-0 border-(--tooltip-border) bg-(--tooltip-bg) p-3.5 text-[13px] font-medium leading-snug tracking-[-0.01em] text-(--tooltip-fg) shadow-(--tooltip-shadow) dark:border-(--border) dark:bg-(--surface) dark:text-(--text-primary) dark:shadow-(--shadow-md)"
                           >
                             <PopoverDescription>{tooltip}</PopoverDescription>
                           </PopoverContent>
@@ -268,7 +268,7 @@ function DashboardPageInner() {
                         <Info
                           size={12}
                           strokeWidth={2}
-                          className="shrink-0 text-[var(--text-muted)] opacity-60"
+                          className="shrink-0 text-(--text-muted) opacity-60"
                           aria-hidden
                         />
                       </TooltipTrigger>
@@ -289,8 +289,8 @@ function DashboardPageInner() {
                 disabled={!canGenerate}
                 onClick={handleGenerate}
                 className={cn(
-                  'flex items-center gap-2 rounded-lg border-none bg-(--accent) px-4 py-2 text-[13px] font-semibold text-(--accent-foreground) shadow-[var(--shadow-accent-sm)] transition-all duration-200 ease-in-out',
-                  'enabled:hover:bg-(--accent-hover) enabled:hover:shadow-[var(--shadow-accent-md)] enabled:hover:-translate-y-px enabled:active:translate-y-0',
+                  'flex items-center gap-2 rounded-lg border-none bg-(--accent) px-4 py-2 text-[13px] font-semibold text-(--accent-foreground) shadow-(--shadow-accent-sm) transition-all duration-200 ease-in-out',
+                  'enabled:hover:bg-(--accent-hover) enabled:hover:shadow-(--shadow-accent-md) enabled:hover:-translate-y-px enabled:active:translate-y-0',
                   'disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:hover:translate-y-0',
                 )}
               >

@@ -27,7 +27,7 @@ export function DashboardTopbar({
   return (
     <header
       className={cn(
-        'relative z-[45] flex h-14 shrink-0 items-center justify-between gap-2 border-b border-(--border) bg-(--bg) px-3 pl-3 sm:px-5 sm:pl-6',
+        'relative z-45 flex h-14 shrink-0 items-center justify-between gap-2 border-b border-(--border) bg-(--bg) px-3 pl-3 sm:px-5 sm:pl-6',
       )}
     >
       <div className="flex min-w-0 flex-1 items-center gap-2">

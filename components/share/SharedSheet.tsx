@@ -23,10 +23,10 @@ const TYPE_BADGE_LABEL: Record<GenerationType, string> = {
 }
 
 const TYPE_BADGE_CLASS: Record<GenerationType, string> = {
-  summary: 'bg-[var(--type-sum-bg)] text-[var(--type-sum-text)]',
-  rewrite_professional: 'bg-[var(--type-pro-bg)] text-[var(--type-pro-text)]',
-  rewrite_casual: 'bg-[var(--type-cas-bg)] text-[var(--type-cas-text)]',
-  bullets: 'bg-[var(--type-bul-bg)] text-[var(--type-bul-text)]',
+  summary: 'bg-(--type-sum-bg) text-(--type-sum-text)',
+  rewrite_professional: 'bg-(--type-pro-bg) text-(--type-pro-text)',
+  rewrite_casual: 'bg-(--type-cas-bg) text-(--type-cas-text)',
+  bullets: 'bg-(--type-bul-bg) text-(--type-bul-text)',
 }
 
 function SharedRowSkeleton() {
