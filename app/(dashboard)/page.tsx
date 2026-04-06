@@ -165,7 +165,7 @@ function DashboardPageInner() {
     'border-(--accent) bg-[color-mix(in_srgb,var(--accent)_7%,transparent)] font-semibold text-(--accent)'
 
   return (
-    <div className="flex flex-1 flex-col items-center overflow-y-auto overflow-x-hidden pt-6 pb-12 [scrollbar-width:thin] [scrollbar-color:var(--border)_transparent] sm:pt-10 sm:pb-16 lg:pt-12 lg:pb-20">
+    <div className="flex min-h-0 flex-1 flex-col items-center overflow-y-auto overflow-x-hidden pt-6 pb-12 [scrollbar-width:thin] [scrollbar-color:var(--border)_transparent] sm:pt-10 sm:pb-16 lg:pt-12 lg:pb-20">
       <div className="flex w-full max-w-[680px] flex-col gap-4 px-4 sm:gap-5 sm:px-6 lg:px-7">
         {showWelcomeBlock && (
           <div className="dashboard-welcome-animate px-1 pb-1 pt-3 text-center">
@@ -285,7 +285,13 @@ function DashboardPageInner() {
 
 export default function DashboardPage() {
   return (
-    <Suspense fallback={<div className="min-h-[40vh] bg-(--bg-secondary)" aria-hidden />}>
+    <Suspense
+      fallback={
+        <div className="flex min-h-0 flex-1 items-center justify-center bg-(--bg-secondary)" aria-hidden>
+          <span className="text-sm text-(--text-muted)">Loading…</span>
+        </div>
+      }
+    >
       <DashboardPageInner />
     </Suspense>
   )
