@@ -22,6 +22,7 @@ function ShellInner({
   const searchParamsRef = useRef(searchParams)
   searchParamsRef.current = searchParams
   const viewingIdRef = useRef<string | null>(null)
+  const newSessionFiredRef = useRef(false)
 
   const {
     items,
@@ -56,11 +57,16 @@ function ShellInner({
   )
 
   const startNewSessionWithUrl = useCallback(() => {
+    newSessionFiredRef.current = true
     startNewSession()
     replaceGenerationInUrl(null)
   }, [startNewSession, replaceGenerationInUrl])
 
   useEffect(() => {
+    if (newSessionFiredRef.current) {
+      if (!gParam) newSessionFiredRef.current = false
+      return
+    }
     if (!gParam || isLoading) return
     if (viewingGeneration?.id === gParam) return
 
